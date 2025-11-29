@@ -21,39 +21,17 @@ execSync('pnpm install --prod', {
   stdio: 'inherit'
 })
 
+const patchesPath = path.join(process.cwd(), 'patches')
+if (fs.existsSync(patchesPath) && !process.env.MEDUSA_PUBLISHABLE_KEY) {
+  console.log('No MEDUSA_PUBLISHABLE_KEY detected. Applying auto-resolve patch...')
+  const targetPatchesPath = path.join(MEDUSA_SERVER_PATH, 'patches')
+  fs.cpSync(patchesPath, targetPatchesPath, { recursive: true })
 
-module.exports = async function addPublishableApiKeyToEnv(publishableApiKey) {
-  const RAILWAY_API_TOKEN = process.env.RAILWAY_API_TOKEN;
-  const PROJECT_ID = process.env.RAILWAY_PROJECT_ID;
-  const ENVIRONMENT_ID = process.env.RAILWAY_ENVIRONMENT_ID;
-  const SERVICE_ID = process.env.RAILWAY_SERVICE_ID;
-
-  const query = `
-    mutation variableUpsert($input: VariableUpsertInput!) {
-      variableUpsert(input: $input) {
-        id
-        name
-      }
-    }
-  `;
-
-  return fetch("https://backboard.railway.app/graphql/v2", {
-    method: "POST",
-    headers: {
-      "Authorization": `Bearer ${RAILWAY_API_TOKEN}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      query,
-      variables: {
-        input: {
-          projectId: PROJECT_ID,
-          environmentId: ENVIRONMENT_ID,
-          serviceId: SERVICE_ID,
-          name: "MEDUSA_PUBLISHABLE_KEY",
-          value: publishableApiKey,
-        },
-      },
-    }),
-  });
+  console.log('Applying patches in .medusa/server...')
+  execSync('pnpm dlx patch-package', {
+    cwd: MEDUSA_SERVER_PATH,
+    stdio: 'inherit'
+  })
+} else {
+  console.log('Skipping patches: MEDUSA_PUBLISHABLE_KEY set')
 }
