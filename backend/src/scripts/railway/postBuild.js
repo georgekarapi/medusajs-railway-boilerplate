@@ -16,7 +16,7 @@ if (fs.existsSync(envPath)) {
 }
 
 console.log('Installing dependencies in .medusa/server...')
-execSync('pnpm install --prod', {
+execSync('pnpm install --prod --dangerously-allow-all-builds', {
   cwd: MEDUSA_SERVER_PATH,
   stdio: 'inherit'
 })

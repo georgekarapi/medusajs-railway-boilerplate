@@ -1,3 +1,7 @@
 packages:
   - storefront
   - backend
+
+onlyBuiltDependencies:
+  - sharp
+  - unrs-resolver

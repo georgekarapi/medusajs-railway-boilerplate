@@ -25,7 +25,6 @@ import {
   transform,
   WorkflowResponse,
 } from "@medusajs/framework/workflows-sdk";
-import { addPublishableApiKeyToEnv } from './railway/postBuild.js'
 
 const updateStoreCurrencies = createWorkflow(
   "update-store-currencies",
@@ -347,10 +346,6 @@ export default async function seedDemoData({ container }: ExecArgs) {
     },
   });
   const publishableApiKey = publishableApiKeyResult[0];
-  
-  // Add publishable API key to Railway environment variables
-  await addPublishableApiKeyToEnv(publishableApiKey.token)
-
   await linkSalesChannelsToApiKeyWorkflow(container).run({
     input: {
       id: publishableApiKey.id,
