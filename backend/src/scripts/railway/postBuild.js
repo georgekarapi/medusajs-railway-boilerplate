@@ -28,7 +28,7 @@ if (fs.existsSync(patchesPath) && !process.env.MEDUSA_PUBLISHABLE_KEY) {
   fs.cpSync(patchesPath, targetPatchesPath, { recursive: true })
 
   console.log('Applying patches in .medusa/server...')
-  execSync('pnpm dlx patch-package', {
+  execSync('npx patch-package', {
     cwd: MEDUSA_SERVER_PATH,
     stdio: 'inherit'
   })

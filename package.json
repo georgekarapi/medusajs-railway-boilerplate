@@ -1,0 +1,17 @@
+{
+    "name": "medusajs-railway-template",
+    "version": "0.0.1",
+    "private": true,
+    "scripts": {
+        "setup": "cp backend/.env.template backend/.env && cp storefront/.env.template storefront/.env.local && pnpm --filter backend run seed",
+        "dev": "pnpm --parallel dev"
+    },
+    "devDependencies": {
+        "turbo": "^1.10.14"
+    },
+    "packageManager": "pnpm@10.24.0",
+    "engines": {
+        "node": ">=20",
+        "pnpm": ">=10"
+    }
+}
