@@ -41,7 +41,6 @@
     "@types/react": "^18.3.2",
     "@types/react-dom": "^18.2.25",
     "jest": "^29.7.0",
-    "patch-package": "^8.0.1",
     "prop-types": "^15.8.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -53,6 +52,11 @@
   "engines": {
     "node": ">=20",
     "pnpm": ">=10"
+  },
+  "pnpm": {
+    "patchedDependencies": {
+      "@medusajs/framework@2.11.3": "patches/@medusajs__framework@2.11.3.patch"
+    }
   },
   "packageManager": "pnpm@10.24.0"
 }
