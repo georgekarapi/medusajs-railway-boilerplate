@@ -1,4 +1,4 @@
-[![MedusaJS + Next.js Banner](./.github/medusajs-storefront-monorepo.jpg)](https://railway.com/deploy/PHj_sS?referralCode=karapi&utm_medium=integration&utm_source=template&utm_campaign=generic)
+[![MedusaJS + Next.js Banner](./.github/medusajs-storefront-monorepo.jpg)](https://railway.com/deploy/o4JCaj?referralCode=karapi&utm_medium=integration&utm_source=template&utm_campaign=generic)
 
 # MedusaJS 2.0 + Storefront Monorepo
 
@@ -21,7 +21,12 @@ This repository is optimized for Railway. Template uses Railway's Bucket for
 media upload, avoiding extra costs of an extra service. One-click deployment on
 Railway:
 
-[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/deploy/PHj_sS?referralCode=karapi&utm_medium=integration&utm_source=template&utm_campaign=generic)
+[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/deploy/o4JCaj?referralCode=karapi&utm_medium=integration&utm_source=template&utm_campaign=generic)
+
+> **Note:** We patch **MedusaJS** need of publishable key to allow deployment
+> without any other extra hassles. In case you need to use it, just add the
+> **MEDUSA_PUBLISHABLE_KEY** environment variable to your **Backend** service
+> and both services will be able to use it.
 
 ## 🛠️ Local Development
 
@@ -37,16 +42,13 @@ Railway:
 1. **Clone**
 
    ```bash
-   git clone https://github.com/medusajs/medusa.git
+   git clone https://github.com/georgekarapi/medusajs-railway-boilerplate.git
    ```
 
 2. **Install dependencies:**
 
    ```bash
-   pnpm install
-   ```
-
-   ```bash
+   cd medusajs-railway-boilerplate
    pnpm install
    ```
 
