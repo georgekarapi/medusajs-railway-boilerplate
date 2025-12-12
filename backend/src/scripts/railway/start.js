@@ -44,10 +44,8 @@ const start = async () => {
   if (!isSeeded) {
     console.log("Database is not seeded. Seeding now...");
     try {
-      if(process.env.DB_MODE === "dummy") {
-        console.log("Running seed script...");
-        execSync("npm run seed", { stdio: "inherit" });
-      }
+      console.log("Running seed script...");
+      execSync("npm run seed", { stdio: "inherit" });
   
       const adminEmail = process.env.MEDUSA_ADMIN_EMAIL;
       const adminPassword = process.env.MEDUSA_ADMIN_PASSWORD;
