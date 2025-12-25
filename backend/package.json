@@ -15,6 +15,7 @@
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "build": "medusa build && node src/scripts/railway/postBuild.js",
+    "build:ci": "medusa build",
     "seed": "medusa exec ./src/scripts/seed.ts",
     "start": "node src/scripts/railway/start.js && cd .medusa/server && medusa start --verbose",
     "dev": "medusa develop",
@@ -54,9 +55,6 @@
     "pnpm": ">=10"
   },
   "pnpm": {
-    "overrides": {
-      "esbuild@<=0.24.2": ">=0.25.0"
-    },
     "patchedDependencies": {
       "@medusajs/framework@2.11.3": "patches/@medusajs__framework@2.11.3.patch"
     }

@@ -1,0 +1,36 @@
+name: Build and Test
+on:
+  push:
+    branches:
+      - main
+      - dev
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Generate Env Files
+        run: |
+          cp backend/.env.template backend/.env
+          cp storefront/.env.template storefront/.env.local
+
+      - name: Build Backend
+        run: pnpm --filter backend run build:ci
+
+      - name: Build Storefront
+        run: pnpm --filter storefront run build

@@ -1,0 +1,31 @@
+name: Update Lockfiles for Deployment
+on:
+  push:
+    branches:
+      - main
+permissions:
+  contents: write
+jobs:
+  update-lockfiles:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "pnpm"
+      - name: Generate separate lockfiles
+        run: |
+          echo "shared-workspace-lockfile=false" > .npmrc
+          pnpm install --no-frozen-lockfile
+          rm .npmrc
+      - name: Commit changes
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add backend/pnpm-lock.yaml storefront/pnpm-lock.yaml
+          git diff --quiet && git diff --staged --quiet || git commit -m "chore: update separate lockfiles for deployment"
+          git push

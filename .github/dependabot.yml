@@ -1,13 +1,8 @@
 version: 2
 updates:
   - package-ecosystem: "npm"
-    directory: "/backend"
+    directory: "/"
     schedule:
       interval: "daily"
-    open-pull-requests-limit: 10
-
-  - package-ecosystem: "npm"
-    directory: "/storefront"
-    schedule:
-      interval: "daily"
-    open-pull-requests-limit: 10
+    open-pull-requests-limit: 0
+    target-branch: "dev"
