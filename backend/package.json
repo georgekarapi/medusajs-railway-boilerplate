@@ -15,6 +15,7 @@
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "build": "medusa build && node src/scripts/railway/postBuild.js",
+    "build:ci": "medusa build",
     "seed": "medusa exec ./src/scripts/seed.ts",
     "start": "node src/scripts/railway/start.js && cd .medusa/server && medusa start --verbose",
     "dev": "medusa develop",
