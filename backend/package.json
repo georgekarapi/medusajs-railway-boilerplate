@@ -54,6 +54,9 @@
     "pnpm": ">=10"
   },
   "pnpm": {
+    "overrides": {
+      "esbuild@<=0.24.2": ">=0.25.0"
+    },
     "patchedDependencies": {
       "@medusajs/framework@2.11.3": "patches/@medusajs__framework@2.11.3.patch"
     }
