@@ -1,16 +1,47 @@
-name: Build and Test
+name: CI
 on:
   push:
     branches:
-      - main
       - dev
+      - staging
   pull_request:
 
 jobs:
+  update-lockfiles:
+    if: github.ref == 'refs/heads/staging'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "pnpm"
+      - name: Generate separate lockfiles
+        run: |
+          echo "shared-workspace-lockfile=false" > .npmrc
+          pnpm install --no-frozen-lockfile
+          rm .npmrc
+      - name: Commit changes
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add backend/pnpm-lock.yaml storefront/pnpm-lock.yaml
+          git diff --quiet && git diff --staged --quiet || git commit -m "chore: update separate lockfiles for deployment"
+          git push
+
   build:
+    needs: update-lockfiles
+    if: always() && !failure() && !cancelled()
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref == 'refs/heads/staging' && 'staging' || github.sha }}
 
       - name: Install pnpm
         uses: pnpm/action-setup@v4
