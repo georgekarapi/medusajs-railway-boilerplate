@@ -11,7 +11,6 @@ import {
   createShippingProfilesWorkflow,
   createStockLocationsWorkflow,
   createTaxRegionsWorkflow,
-  linkSalesChannelsToApiKeyWorkflow,
   linkSalesChannelsToStockLocationWorkflow,
   updateStoresStep,
   updateStoresWorkflow,
@@ -289,28 +288,17 @@ export default async function seedDemoData({ container }: ExecArgs) {
       add: [defaultSalesChannel[0].id],
     },
   });
-  logger.info("Finished seeding stock location data.");
 
   logger.info("Seeding publishable API key data...");
-  const { result: publishableApiKeyResult } = await createApiKeysWorkflow(
-    container
-  ).run({
+  await createApiKeysWorkflow(container).run({
     input: {
       api_keys: [
         {
-          title: "Webshop",
+          title: "Default Publishable API Key",
           type: "publishable",
-          created_by: "",
+          created_by: "seed",
         },
       ],
-    },
-  });
-  const publishableApiKey = publishableApiKeyResult[0];
-
-  await linkSalesChannelsToApiKeyWorkflow(container).run({
-    input: {
-      id: publishableApiKey.id,
-      add: [defaultSalesChannel[0].id],
     },
   });
   logger.info("Finished seeding publishable API key data.");
