@@ -24,6 +24,7 @@
     "build:ci": "medusa build"
   },
   "dependencies": {
+    "@medusajs/admin-shared": "2.13.1",
     "@medusajs/admin-sdk": "2.13.1",
     "@medusajs/cli": "2.13.1",
     "@medusajs/framework": "2.13.1",
